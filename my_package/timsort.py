@@ -35,7 +35,7 @@ Here, some beautiful looking text:
 ░░░██║░░░██║██║░╚═╝░██║██████╔╝╚█████╔╝██║░░██║░░░██║░░░
 ░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝╚═════╝░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░
 """
-from misc import greater_than, less_than
+from .misc import greater_than, less_than
 
 
 def timsort(array:list, key:str, reverse:bool=False) -> None:

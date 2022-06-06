@@ -14,7 +14,7 @@ NOTE:
 """
 from misc import greater_than, less_than
 from timsort import timsort as my_timsort
-import time
+from timeit import default_timer as timer
 import random
 
 # The above imports my implementation of timsort
@@ -168,31 +168,45 @@ def mergeSort(arr, key):
             k += 1
 
 
+def test(func, original_array, reverse=False):
+    array = original_array.copy()
+    sorted_array = sorted(array, key=lambda x:x["key"], reverse=reverse)
+    params = ["key"]
+    if reverse: params.append(reverse)
+    start = timer()
+    func(array, *params)
+    end = timer()
+    is_sorted = array == sorted_array
+    print(f"({'XO'[is_sorted]}) {sort_func.__name__:<15} {end-start}")
+    if not is_sorted:
+        with open("error.txt", mode="a") as f:
+            f.write(f"{original_array}\n")
 
 
 # Test codes
 n = 100000  # Length of array
-
+rate_of_unsortedness = 1000  # The larger the value, the more sorted partially_sorted is
+range_of_numbers = 100
 # Produce arrays for testing
-partially_sorted = [{"key":(1,2)[not random.randint(0, 200)]*i} for i in range(n)]
-completely_random = [{"key":random.randint(0, 1000)} for _ in range(n)]
+partially_sorted = [{"key":(1,2)[not random.randint(0, rate_of_unsortedness)]*i} for i in range(n)]
+completely_random = [{"key":random.randint(0, range_of_numbers)} for _ in range(n)]
 
 # Test on completely random arrays
 print("Completely Random:")
-sorted_array = sorted(completely_random, key=lambda x:x['key'])
 for sort_func in (mergeSort, theirTimSort, my_timsort):
-    array = completely_random.copy()
-    a = time.time()
-    sort_func(array, "key")
-    b = time.time()
-    print(f"({'XO'[array == sorted_array]}) {sort_func.__name__:<15} {b-a}")
+    test(sort_func, completely_random)
 
 # Test on partially sorted arrays
-sorted_array = sorted(partially_sorted, key=lambda x:x['key'])
 print("Partially Sorted:")
 for sort_func in (mergeSort, theirTimSort, my_timsort):
-    array = partially_sorted.copy()
-    a = time.time()
-    sort_func(array, "key")
-    b = time.time()
-    print(f"({'XO'[array == sorted_array]}) {sort_func.__name__:<15} {b-a}")
+    test(sort_func, partially_sorted)
+
+
+# Test on reverse functionality
+print("\nReverse sort:\n")
+
+print("Completely Random:")
+test(my_timsort, completely_random, True)
+
+print("Partially Sorted:")
+test(my_timsort, partially_sorted, True)
