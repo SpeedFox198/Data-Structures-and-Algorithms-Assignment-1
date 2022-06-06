@@ -35,10 +35,10 @@ Here, some beautiful looking text:
 ░░░██║░░░██║██║░╚═╝░██║██████╔╝╚█████╔╝██║░░██║░░░██║░░░
 ░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝╚═════╝░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░
 """
-from .misc import greater_than, less_than
+from misc import greater_than, less_than
 
 
-def timsort(array:list, key:str) -> None:
+def timsort(array:list, key:str, reverse:bool=False) -> None:
     """ Sorts an array using timsort sort algorithm """
 
     n = len(array)  # Length of array
@@ -54,7 +54,7 @@ def timsort(array:list, key:str) -> None:
     while remaining:
 
         # Get length of next run
-        count, decreasing = count_run(array, key, low, low+remaining-1)
+        count, decreasing = count_run(array, key, low, low+remaining-1, reverse=reverse)
 
         # If run is strictly descending, reverse run in-place
         if decreasing:
@@ -63,7 +63,7 @@ def timsort(array:list, key:str) -> None:
         # If length of run is less than minrun, extend run
         if count < min_run:
             force = min(min_run, remaining)  # Length to force size of run into
-            bin_insertion_sort(array, key, low, low+force-1)
+            bin_insertion_sort(array, key, low, low+force-1, reverse=reverse)
             count = force
 
         # Store value of current low and count
@@ -81,9 +81,9 @@ def timsort(array:list, key:str) -> None:
                 powers.pop()  # Remove old power from stack
                 prev_prev_low, prev_prev_count = runs[-2]
                 if prev_prev_count <= prev_count:
-                    merge_lo(array, key, prev_prev_low, prev_prev_count, prev_low, prev_count)
+                    merge_lo(array, key, prev_prev_low, prev_prev_count, prev_low, prev_count, reverse=reverse)
                 else:
-                    merge_hi(array, key, prev_prev_low, prev_prev_count, prev_low, prev_count)
+                    merge_hi(array, key, prev_prev_low, prev_prev_count, prev_low, prev_count, reverse=reverse)
 
                 runs.pop()  # Remove old prev run from stack
                 runs[-1][1] += prev_count  # Set new low and count of current run
@@ -102,9 +102,9 @@ def timsort(array:list, key:str) -> None:
     for i in range(len(runs)-2, -1, -1):
         prev_low, prev_count = runs[i]
         if prev_count <= curr_count:
-            merge_lo(array, key, prev_low, prev_count, curr_low, curr_count)
+            merge_lo(array, key, prev_low, prev_count, curr_low, curr_count, reverse=reverse)
         else:
-            merge_hi(array, key, prev_low, prev_count, curr_low, curr_count)
+            merge_hi(array, key, prev_low, prev_count, curr_low, curr_count, reverse=reverse)
 
         # Calculate new low and count
         curr_low = prev_low
@@ -156,7 +156,7 @@ def powerloop(s1:int, n1:int, n2:int, n:int) -> int:
     return power
 
 
-def bin_insertion_sort(array:list, key:str, start:int, end:int) -> None:
+def bin_insertion_sort(array:list, key:str, start:int, end:int, reverse:bool=False) -> None:
     """ Sorts an array using binary insertion sort algorithm """
 
     # Go through the elements and make comparisions
@@ -167,7 +167,7 @@ def bin_insertion_sort(array:list, key:str, start:int, end:int) -> None:
         j = i-1  # Index of element left of current element
 
         # Get index of position to insert element in
-        pos = bin_search(array, key, e[key], start, j)
+        pos = bin_search(array, key, e[key], start, j, reverse=reverse)
 
         # Shift elements to the right to perform insertion
         while j >= pos:
@@ -178,7 +178,7 @@ def bin_insertion_sort(array:list, key:str, start:int, end:int) -> None:
         array[j+1] = e
 
 
-def bin_search(array:list, key:str, target, low:int, high:int) -> int:
+def bin_search(array:list, key:str, target, low:int, high:int, reverse:bool=False) -> int:
     """ Binary searches the subarray for the index to insert element """
 
     # Loop till index out of range
@@ -187,11 +187,11 @@ def bin_search(array:list, key:str, target, low:int, high:int) -> int:
         mid = (low + high) >> 1  # Index of middle element
 
         # If middle element is less than target
-        if less_than(array[mid][key], target):
+        if less_than(array[mid][key], target, reverse=reverse):
             low = mid + 1
 
         # If middle element is more than target
-        elif greater_than(array[mid][key], target):
+        elif greater_than(array[mid][key], target, reverse=reverse):
             high = mid - 1
 
         # If middle element matches target
@@ -204,7 +204,7 @@ def bin_search(array:list, key:str, target, low:int, high:int) -> int:
     return low
 
 
-def count_run(array:list, key:str, low:int, high:int):
+def count_run(array:list, key:str, low:int, high:int, reverse:bool=False):
     """ Returns the length of the run beginning at low """
 
     # If low is at end of list
@@ -215,13 +215,13 @@ def count_run(array:list, key:str, low:int, high:int):
     low += 1
 
     # If run is strictly decreasing
-    if less_than(array[low][key], array[low-1][key]):
+    if less_than(array[low][key], array[low-1][key], reverse=reverse):
 
         # Count length of natural run
         for i in range(low+1, high+1):
 
             # Break if is increasing
-            if less_than(array[i][key], array[i-1][key]):
+            if less_than(array[i][key], array[i-1][key], reverse=reverse):
                 count += 1
             else:
                 break
@@ -253,7 +253,7 @@ def reverse_run(array:list, low:int, high:int) -> None:
         high -= 1
 
 
-def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int) -> None:
+def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, reverse:bool=False) -> None:
     """ Merges two runs at index s1 and s2 with length n1 and n2 where n1 < n2 """
 
     # Copy elements of smaller run into temp array,
@@ -273,7 +273,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int) -> None:
     while i < n1 and j < s2+n2:
 
         # If s2[j] < s1[i]
-        if less_than(array[j][key], temp[i][key]):
+        if less_than(array[j][key], temp[i][key], reverse=reverse):
             array[k] = array[j]
             j += 1
         
@@ -291,7 +291,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int) -> None:
         k += 1
 
 
-def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int) -> None:
+def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, reverse:bool=False) -> None:
     """ Merges two runs at index s1 and s2 with length n1 and n2 where n1 > n2 """
 
     # Copy elements of smaller run into temp array,
@@ -309,7 +309,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int) -> None:
     while i >= s1 and j >= 0:
 
         # Else s1[i] > s2[j]
-        if greater_than(array[i][key], temp[j][key]):
+        if greater_than(array[i][key], temp[j][key], reverse=reverse):
             array[k] = array[i]
             i -= 1
 

@@ -179,8 +179,8 @@ completely_random = [{"key":random.randint(0, 1000)} for _ in range(n)]
 
 # Test on completely random arrays
 print("Completely Random:")
-sorted_array = sorted(completely_random, key=lambda x:x['key'], reverse=True)
-for sort_func in (my_timsort,):
+sorted_array = sorted(completely_random, key=lambda x:x['key'])
+for sort_func in (mergeSort, theirTimSort, my_timsort):
     array = completely_random.copy()
     a = time.time()
     sort_func(array, "key")
@@ -188,9 +188,9 @@ for sort_func in (my_timsort,):
     print(f"({'XO'[array == sorted_array]}) {sort_func.__name__:<15} {b-a}")
 
 # Test on partially sorted arrays
-sorted_array = sorted(partially_sorted, key=lambda x:x['key'], reverse=True)
+sorted_array = sorted(partially_sorted, key=lambda x:x['key'])
 print("Partially Sorted:")
-for sort_func in (my_timsort,):
+for sort_func in (mergeSort, theirTimSort, my_timsort):
     array = partially_sorted.copy()
     a = time.time()
     sort_func(array, "key")

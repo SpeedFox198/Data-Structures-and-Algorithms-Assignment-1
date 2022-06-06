@@ -259,7 +259,7 @@ def equals_to(x, y) -> bool:
     return x == y
 
 
-def greater_than(x, y) -> bool:
+def greater_than(x, y, reverse:bool=False) -> bool:
     """ Returns True if x is greater than y """
 
     # Perform non-case-sensitive comparison
@@ -267,10 +267,14 @@ def greater_than(x, y) -> bool:
         x = x.lower()
         y = y.lower()  # Assume y is also a str
 
-    return x > y
+    # If reversing, do the reverse of greater than (hahaha)
+    if reverse:
+        return x < y
+    else:
+        return x > y
 
 
-def less_than(x, y) -> bool:
+def less_than(x, y, reverse:bool=False) -> bool:
     """ Returns True if x is less than y """
 
     # Perform non-case-sensitive comparison
@@ -278,7 +282,11 @@ def less_than(x, y) -> bool:
         x = x.lower()
         y = y.lower()  # Assume y is also a str
 
-    return x < y
+    # If reversing, do the reverse of less than (hahaha)
+    if reverse:
+        return x > y
+    else:
+        return x < y
 
 
 # Test code
