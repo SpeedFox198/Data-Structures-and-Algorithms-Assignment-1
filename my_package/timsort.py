@@ -35,7 +35,7 @@ Here, some beautiful looking text:
 ░░░██║░░░██║██║░╚═╝░██║██████╔╝╚█████╔╝██║░░██║░░░██║░░░
 ░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝╚═════╝░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░
 """
-from misc import less_than, greater_than
+from .misc import greater_than, less_than
 
 
 def timsort(array:list, key:str) -> None:
@@ -187,11 +187,11 @@ def bin_search(array:list, key:str, target, low:int, high:int) -> int:
         mid = (low + high) >> 1  # Index of middle element
 
         # If middle element is less than target
-        if greater_than(array[mid][key], target):
+        if less_than(array[mid][key], target):
             low = mid + 1
 
         # If middle element is more than target
-        elif less_than(array[mid][key], target):
+        elif greater_than(array[mid][key], target):
             high = mid - 1
 
         # If middle element matches target
@@ -215,13 +215,13 @@ def count_run(array:list, key:str, low:int, high:int):
     low += 1
 
     # If run is strictly decreasing
-    if greater_than(array[low][key], array[low-1][key]):
+    if less_than(array[low][key], array[low-1][key]):
 
         # Count length of natural run
         for i in range(low+1, high+1):
 
             # Break if is increasing
-            if greater_than(array[i][key], array[i-1][key]):
+            if less_than(array[i][key], array[i-1][key]):
                 count += 1
             else:
                 break
@@ -236,7 +236,7 @@ def count_run(array:list, key:str, low:int, high:int):
         for i in range(low+1, high+1):
 
             # Break if is decreasing
-            if greater_than(array[i][key], array[i-1][key]):
+            if less_than(array[i][key], array[i-1][key]):
                 break
             else:
                 count += 1
@@ -273,7 +273,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int) -> None:
     while i < n1 and j < s2+n2:
 
         # If s2[j] < s1[i]
-        if greater_than(array[j][key], temp[i][key]):
+        if less_than(array[j][key], temp[i][key]):
             array[k] = array[j]
             j += 1
         
@@ -309,7 +309,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int) -> None:
     while i >= s1 and j >= 0:
 
         # Else s1[i] > s2[j]
-        if less_than(array[i][key], temp[j][key]):
+        if greater_than(array[i][key], temp[j][key]):
             array[k] = array[i]
             i -= 1
 
