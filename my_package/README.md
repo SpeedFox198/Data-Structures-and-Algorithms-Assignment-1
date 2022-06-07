@@ -33,6 +33,7 @@
 ### How Records are Stored
 
 Records in my project are stored as dictionaries in a list. E.g.:
+
 > `records = [
 >     {"package":"Package 01", "customer":"Adams", "pax":1, "cost":20},
 >     {"package":"Package 02", "customer":"Baker", "pax":2, "cost":39.90},
@@ -41,6 +42,9 @@ Records in my project are stored as dictionaries in a list. E.g.:
 
 Each record stores the package name, customer name, number of pax, and package cost per pax.
 Each value could be retrieved with their respective keys.
+
+
+
 
 ### AVL Tree
 
@@ -76,7 +80,11 @@ Another method I considered was to use a python **dictionary/set** (as you know 
 
 The challenge I faced was that **mutable objects** could not and should not be hashed. An interesting suggestion I saw on stackoverflow was to use `id` as the key in the dictionary, this kinda works but it's not good for too many reasons.
 
-To solve this, I could change the way I store 
+To solve this, I could change the way I store my records, for each dictionary add a key to uniquely identify them, then use this value as the key in the dictionary. However, I am not very willing to change the whole structure of my records just to cater to storing it in a Node.
+
+In the end, I opted for my initial idea of using a list.
+
+My friend who also did this project chose to use a [**doubly linked list**](https://github.com/KJHJason/Data-Structures-And-Algorithms/blob/master/NYP-DSA-Assignment/src/data_structures/DoublyLinkedList.py) of using a  instead of a simple list. Although the time complexity for searching for a record in a doubly linked list is still **linear** the removing of this record becomes a **constant time operation** instead. A slight improvement to the list approach.
 
 #### Time complexities
 - Searching of keys: `O(log(n))`
@@ -145,6 +153,8 @@ Worst case: `O(n*log(n))`
 #### Overall difficulty level: **Extremely Difficult (to the point where I questioned the meaning of life)**
 
 Many online implementations of timsort did not include the true key elements of timsort in it. Most of the components mentioned above are not implemented in most of the codes online. Also, information on all of these is either hard to find or hard to understand. I even resorted to reading the source code of Python’s timsort written in C language and its documentations. This took me 1 whole week to implement. (QAQ)
+
+
 
 
 ## Custom Sort
