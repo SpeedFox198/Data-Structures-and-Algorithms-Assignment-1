@@ -150,4 +150,40 @@ Many online implementations of timsort **did not include** the true key elements
 
 ## Custom Sort
 
-> To be added
+A custom sort targetted specifically for this application. Sort is built around the idea that updating of 1 record results in an array with only 1 unsorted element.
+
+### The Issue
+
+After searching and updating a record, the records will no longer be sorted. That is not how an application is supposed to be like and it's not nice at all to leave it as it is, unsorted. So I've decided to sort the array in the same order as how it did previously.
+
+I could just sort it using any sorting algorithm, but that would not be great as it will be too slow.
+Since only 1 element is out-of-place, there should be a faster way to sort it.
+
+### Thought Process
+
+The initial idea was to implement timsort here too which will work fantastically well as timsort is used for partially sorted array. I then thought that I should make it even more optimised and specific as timsort is too general and works for all datasets. Thus I'll made a sort meant for sorting only 1 out-of-place element.
+
+
+### The Algorithm
+
+The algorithm is pretty simple. It is sort of a miniature modified insertion sort. As only 1 element is out of place, I only need to find that one element. I used binary search to find the index of the specific object in the array before updating the record.
+
+Then, if the new value should be inserted to the left, I'll perform insertion of only 1 element to the left. Else, if it should be to the right, I'll instead perform insertion of only 1 element to the right.
+
+There's also a case where the update of the value did not mess up the sequence of the array at all (new value is still larger than left and smaller than right). In that case we will just skip the operation.
+
+
+### Footnote
+
+After writing this algorithm, I decided to search online
+if there was any article takling this problem before
+and came across this [interesting solution](https://cs.stackexchange.com/questions/139914/sort-an-array-with-a-constant-number-of-unsorted-elements) proposed by someone
+which solves a slightly more general case as compared to mine
+
+### Overall difficulty level: Easy
+
+Since it was basically an insertion sort but for a single element, it was very simple to implement. A simple yet useful function.
+
+## Conclusion
+
+It both fun and tiring to learn and implement these algorithms. The time spent on this project was definitely worth it. Also, you really should try out the game called Honkai Impact 3rd.
