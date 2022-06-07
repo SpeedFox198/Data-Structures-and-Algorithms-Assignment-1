@@ -68,7 +68,7 @@ Searching of keys will yield a copy of this list (to prevent change of data to l
 
 The only issue with the list method is that during deletion of a record, it takes **linear time** to find for the position of the record in the list, and also a worse case of **linear time** to pop the record out of the list. Although this isn't a huge issue as I don't think the list will ever become very long. If only there was a better method.
 
-Another method I considered was to use a python **dictionary/set** (as you know these things has `O(1))` operations).
+Another method I considered was to use a python **dictionary/set** (as you know these things has `O(1)` operations).
 
 The challenge I faced was that **mutable objects** could not and should not be hashed. An interesting suggestion I saw on stackoverflow was to use `id` as the key in the dictionary, this kinda works but it's not good for too many reasons.
 
@@ -76,7 +76,7 @@ To solve this, I could change the way I store my records, for each dictionary ad
 
 In the end, I opted for my initial idea of using a list.
 
-My friend who also did this project chose to use a [**doubly linked list**](https://github.com/KJHJason/Data-Structures-And-Algorithms/blob/master/NYP-DSA-Assignment/src/data_structures/DoublyLinkedList.py) of using a  instead of a simple list. Although the time complexity for searching for a record in a doubly linked list is still **linear** the removing of this record becomes a **constant time operation** instead. A slight improvement to the list approach.
+My friend who also did this project chose to use a [**doubly linked list**](https://github.com/KJHJason/Data-Structures-And-Algorithms/blob/master/NYP-DSA-Assignment/src/data_structures/DoublyLinkedList.py) instead of using a simple list. Although the time complexity for searching for a record in a doubly linked list is still **linear** the removing of this record becomes a **constant time operation** instead. A slight improvement to the list approach.
 
 ### Time complexities
 - Searching of keys: `O(log(n))`
@@ -88,7 +88,7 @@ My friend who also did this project chose to use a [**doubly linked list**](http
 
 AVL tree is much more **complex** than a simple BST, even with documents and codes online, it still takes time and effort to implement it successfully.
 
-To make things more complicated, I have decided to **handle duplicate records**. The idea I had, and implemented, was for each node to **store a list of records** with the same value, and to only delete the node when list of records is empty. This also made other methods more complicated.
+To make things more complicated, I have decided to **handle duplicate records**, which also made other class methods more complicated.
 
 
 

@@ -276,7 +276,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, reverse:bool=F
         if less_than(array[j][key], temp[i][key], reverse=reverse):
             array[k] = array[j]
             j += 1
-        
+
         # Else s1[i] <= s2[j]
         else:
             array[k] = temp[i]
@@ -325,3 +325,49 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, reverse:bool=F
         array[k] = temp[j]
         j -= 1
         k -= 1
+
+
+def gallop_left_run(run, target, index, max_offset):
+    prev_offset = 0
+    offset = 1
+
+    # Gallop right
+    if run[index] < target:
+        while offset < max_offset and run[index+offset] < target:
+            prev_offset = offset
+            offset = (offset << 1) + 1  # Increase offset
+
+        if offset > max_offset:
+            offset = max_offset
+
+        prev_offset += index
+        offset += index
+
+    # Gallop left
+    else:
+        while offset < max_offset and run[index-offset] > target:
+            prev_offset = offset
+            offset = (offset << 1) + 1
+
+        if offset > max_offset:
+            offset = max_offset
+        
+        prev_offset, offset = index - offset, index - prev_offset
+
+    while prev_offset < offset:
+        mid = (prev_offset + offset) >> 1
+        if run[mid] < target:
+            prev_offset = mid + 1  # Increase offset
+        else:
+            offset = mid
+
+    return offset
+
+
+def gallop_right_run(run, target, index, max_offset):
+    prev_offset = 0
+    offset = 1
+
+    # Gallop left
+    if target < run[index]
+
