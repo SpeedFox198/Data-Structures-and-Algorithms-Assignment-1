@@ -1,2 +1,6 @@
-# Ignore python cache
+# Cache generated from python imports
 */__pycache__/
+
+# I'm not sharing these images ( ≧Д≦)
+assets/dead.mdp
+assets/seele_death.png
