@@ -52,7 +52,7 @@ First, let's talk about **binary search**, it is an algorithm known for its extr
 
 One approach would simply be to sort the array whenever binary search is performed. However, the extra time taken to sort the given array will make the operation even slower than a linear search.
 
-Another possible approach was to maintain a sorted array, and keep it sorted when values are updated. This approach is not bad, but we still need to perform a `O(n*log(n))` time sorting everytime a value is updated. Even [Timsort](#timsort), which boast extreme speed for partially sorted arrays, and my [Custom Sort](#custom-sort), with a `O(n)` time complexity, are still not good enough. We could do better than this.
+Another possible approach was to maintain a sorted array, and keep it sorted when values are updated. This approach is not bad, but we still need to perform a `O(n*log(n))` time sorting everytime a value is updated. Even [Timsort](#timsort), which boasts extreme speed for partially sorted arrays, and my [Custom Sort](#custom-sort), with a `O(n)` time complexity, are still not good enough. We could do better than this.
 
 So, I took a different approach, to maintain a BST for performing searches. However, time taken for searches in a BST **depends on its height**, a skewed tree might take `O(n)` time for searching in worst cases.
 
@@ -86,7 +86,7 @@ My friend who also did this project chose to use a [**doubly linked list**](http
 
 #### Overall difficulty level: **Hard**
 
-AVL tree is much more **complex** than a simple BST tree, even with documents and codes online, it still takes time and effort to implement it successfully.
+AVL tree is much more **complex** than a simple BST, even with documents and codes online, it still takes time and effort to implement it successfully.
 
 To make things more complicated, I have decided to **handle duplicate records**. The idea I had, and implemented, was for each node to **store a list of records** with the same value, and to only delete the node when list of records is empty. This also made other methods more complicated.
 
