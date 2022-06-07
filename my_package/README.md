@@ -54,4 +54,3 @@ Thus, I chose to implement a self-balancing AVL tree. I also chose this tree ove
 - Updating key in a node: `O(log n)` _Since updating is essentially insertion + deletion_
 
 > Overall difficulty level: <bold style="color:#ffffff;weight">Hard</bold>
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `#f03c15`
