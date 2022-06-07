@@ -32,8 +32,15 @@
 
 ### How Records are Stored
 
+Records in my project are stored as dictionaries in a list. E.g.:
+> `records = [
+>     {"package":"Package 01", "customer":"Adams", "pax":1, "cost":20},
+>     {"package":"Package 02", "customer":"Baker", "pax":2, "cost":39.90},
+>     {"package":"Package 03", "customer":"Clark", "pax":3, "cost":44},
+> ]`
 
-
+Each record stores the package name, customer name, number of pax, and package cost per pax.
+Each value could be retrieved with their respective keys.
 
 ### AVL Tree
 
@@ -82,6 +89,8 @@ To solve this, I could change the way I store
 AVL tree is much more **complex** than a simple BST tree, even with documents and codes online, it still takes time and effort to implement it successfully.
 
 To make things more complicated, I have decided to **handle duplicate records**. The idea I had, and implemented, was for each node to **store a list of records** with the same value, and to only delete the node when list of records is empty. This also made other methods more complicated.
+
+
 
 
 ### Timsort
