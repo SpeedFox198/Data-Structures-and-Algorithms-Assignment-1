@@ -6,10 +6,10 @@
 
 ## Project Details
 
-**Author:** Jabriel Seah
-**Why the image:** I was dying while doing the project
-**Why Honkai Impact 3rd:** Why not? :P
-**Where did you get the images:**
+**Author:** Jabriel Seah  
+**Why the image:** I was dying while doing the project  
+**Why Honkai Impact 3rd:** Why not? :P  
+**Where did you get the images:**  
 - The 2 seeles were from [here](https://www.pixiv.net/en/artworks/77771464)
 - Blood was edited from [this image](https://www.cleanpng.com/png-blood-drawing-clip-art-blood-splatter-png-587073/)
 - Others were stripped from emojis in [Honkai Impact 3rd Discord server](https://discord.com/invite/hi3)
