@@ -34,10 +34,10 @@
 
 Records in my project are stored as dictionaries in a list. E.g.:
 
-> `records = [
->     {"package":"Package 01", "customer":"Adams", "pax":1, "cost":20},
->     {"package":"Package 02", "customer":"Baker", "pax":2, "cost":39.90},
->     {"package":"Package 03", "customer":"Clark", "pax":3, "cost":44},
+> `records = [  
+>     {"package":"Package 01", "customer":"Adams", "pax":1, "cost":20},  
+>     {"package":"Package 02", "customer":"Baker", "pax":2, "cost":39.90},  
+>     {"package":"Package 03", "customer":"Clark", "pax":3, "cost":44},  
 > ]`
 
 Each record stores the package name, customer name, number of pax, and package cost per pax.
