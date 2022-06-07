@@ -32,17 +32,9 @@
 
 ### How Records are Stored
 
-Records in my project are stored as dictionaries in a list. E.g.:
-
-> `records = [  
->     {"package":"Package 01", "customer":"Adams", "pax":1, "cost":20},  
->     {"package":"Package 02", "customer":"Baker", "pax":2, "cost":39.90},  
->     {"package":"Package 03", "customer":"Clark", "pax":3, "cost":44},  
-> ]`
-
+Records in my project are stored as dictionaries in a list.  
 Each record stores the package name, customer name, number of pax, and package cost per pax.
 Each value could be retrieved with their respective keys.
-
 
 
 
@@ -100,7 +92,6 @@ To make things more complicated, I have decided to **handle duplicate records**.
 
 
 
-
 ### Timsort
 
 Timsort is an extremely fast stable hybrid sorting algorithm that is optimised for efficiently sorting real world data. Timsort is a sort that builds around the idea that data in real world have natural occurring sorted sequences (called “runs”).
@@ -153,7 +144,6 @@ Worst case: `O(n*log(n))`
 #### Overall difficulty level: **Extremely Difficult (to the point where I questioned the meaning of life)**
 
 Many online implementations of timsort did not include the true key elements of timsort in it. Most of the components mentioned above are not implemented in most of the codes online. Also, information on all of these is either hard to find or hard to understand. I even resorted to reading the source code of Python’s timsort written in C language and its documentations. This took me 1 whole week to implement. (QAQ)
-
 
 
 
