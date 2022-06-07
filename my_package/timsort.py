@@ -207,7 +207,7 @@ def bin_search(array:list, key:str, target, low:int, high:int, reverse:bool=Fals
     return low
 
 
-def count_run(array:list, key:str, low:int, high:int, reverse:bool=False):
+def count_run(array:list, key:str, low:int, high:int, reverse:bool=False) -> tuple[int, bool]:
     """ Returns the length of the run beginning at low """
 
     # If low is at end of list
@@ -330,7 +330,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, reverse:bool=F
         k -= 1
 
 
-def gallop_left(run, target, index, max_offset):
+def gallop_left(run:list, target, index:int, max_offset:int) -> int:
     """ Gallop and find position to insert element of left array inside right array """
     prev_offset = 0  # Value of previous offset (low boundary in binary search)
     offset = 1       # Value of current offset (high boundary in binary search)
@@ -374,7 +374,7 @@ def gallop_left(run, target, index, max_offset):
     return offset
 
 
-def gallop_right(run, target, index, max_offset):
+def gallop_right(run:list, target, index:int, max_offset:int) -> int:
     """ Gallop and find position to insert element of right array inside left array """
     prev_offset = 0
     offset = 1
