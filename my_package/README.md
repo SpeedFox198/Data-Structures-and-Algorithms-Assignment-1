@@ -32,7 +32,7 @@
 
 ### How Records are Stored
 
-Records in my project are stored as dictionaries in a list.  
+Records in my project are stored as [dictionaries in a list](/main.py).  
 Each record stores the package name, customer name, number of pax, and package cost per pax.
 Each value could be retrieved with their respective keys.
 
