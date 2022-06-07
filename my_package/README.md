@@ -30,35 +30,58 @@
 > A record of all my findings, struggles, and hardwork ｡゜(｀Д´)゜｡
 
 
+### How Records are Stored
+
+
+
+
 ### AVL Tree
 
 ![A tree?](/assets/tree.gif)
 
-AVL tree is a self-balancing Binary Search Tree (BST). Like other self-balancing trees (e.g., Red Black Tree), AVL tree tries to keep the height of the tree to its minimum while maintaining a BST structure.
+AVL tree is a **self-balancing Binary Search Tree** (BST). Like other self-balancing trees (e.g., Red Black Tree), AVL tree tries to **keep the height of the tree to its minimum** while maintaining a BST structure.
 
-In AVL tree, a node of the tree is considered balanced if the absolute difference between the max height of the left and right subtrees are not more than 1. AVL tree maintains this balance by checking for the balance of each node whenever an insertion or deletion of node occurs. When a node is unbalanced, it balances itself by performing a series of rotations called left-rotate and right-rotate.
+In AVL tree, a node of the tree is considered **balanced** if the absolute difference between the max height of the left and right subtrees are not more than 1. AVL tree maintains this balance by checking for the balance of each node whenever an **insertion or deletion** of node occurs. When a node is **unbalanced**, it balances itself by performing a series of rotations called **left-rotate** and **right-rotate**.
 
 #### Why is a self-balancing BST needed? Is it useful?
 
-First, we talk about binary search, it is an algorithm known for its extremely fast O(log n) time complexity. Its only issue is that it only works on sorted arrays, thus the array must be sorted before searching.
+First, let's talk about **binary search**, it is an algorithm known for its extremely fast `O(log(n))` time complexity. Its only issue is that it only works on sorted arrays, thus the **array must be sorted** before searching.
 
 One approach would simply be to sort the array whenever binary search is performed. However, the extra time taken to sort the given array will make the operation even slower than a linear search.
 
-So, I took a different approach, to maintain a BST for performing searches. However, time taken for searches in a BST depends on its height, a skewed tree might take O(n) time for searching in worst cases.
+Another possible approach was to maintain a sorted array, and keep it sorted when values are updated. This approach is not bad, but we still need to perform a `O(n*log(n))` time sorting everytime a value is updated. Even [Timsort](#timsort), which boast extreme speed for partially sorted arrays, and my [Custom Sort](#custom-sort), with a `O(n)` time complexity, are still not good enough. We could do better than this.
 
-Thus, I chose to implement a self-balancing AVL tree. I also chose this tree over another self-balancing Red-Black tree due to AVL tree creating a more balanced tree than Red-Black tree does.
+So, I took a different approach, to maintain a BST for performing searches. However, time taken for searches in a BST **depends on its height**, a skewed tree might take `O(n)` time for searching in worst cases.
+
+Thus, I chose to implement a **self-balancing** AVL tree. I also chose this tree over another self-balancing Red-Black tree due to AVL tree creating a more balanced tree than Red-Black tree does.
+
+#### Handling duplicate records
+
+Just like all my other implementations of searches, I have decided to handle having records with the **same keys** in my AVL Tree. To do this, I came up with a couple of solutions.
+
+The simplest method for each `Node` to store records in a **list**.
+
+Searching of keys will yield a copy of this list (to prevent change of data to list maintained by node). Insertion will create a new node if the key is unique, and append to the list if the key already exists. Likewise, deletion will simply pop the item from the list, and only remove the node if the list becomes empty.
+
+The only issue with the list method is that during deletion of a record, it takes **linear time** to find for the position of the record in the list, and also a worse case of **linear time** to pop the record out of the list. Although this isn't a huge issue as I don't think the list will ever become very long. If only there was a better method.
+
+Another method I considered was to use a python **dictionary/set** (as you know these things has `O(1))` operations).
+
+The challenge I faced was that **mutable objects** could not and should not be hashed. An interesting suggestion I saw on stackoverflow was to use `id` as the key in the dictionary, this kinda works but it's not good for too many reasons.
+
+To solve this, I could change the way I store 
 
 #### Time complexities
-- Searching of value: `O(log n)`
-- Insertion of nodes: `O(log n)`
-- Deletion of nodes: `O(log n)`
-- Updating key in a node: `O(log n)` _Since updating is essentially insertion + deletion_
+- Searching of keys: `O(log(n))`
+- Insertion of nodes: `O(log(n))`
+- Deletion of nodes: `O(log(n))`
+- Updating key in a node: `O(log(n))` _Since updating is essentially insertion + deletion_
 
 #### Overall difficulty level: **Hard**
 
-AVL tree is much more complex than a simple BST tree, even with documents and codes online, it still takes time and effort to implement it successfully.
+AVL tree is much more **complex** than a simple BST tree, even with documents and codes online, it still takes time and effort to implement it successfully.
 
-To make things more complicated, I have decided to handle duplicate records. The idea I had, and implemented, was for each node to store a list of records with the same value, and to only delete the node when list of records is empty. This also made other methods more complicated.
+To make things more complicated, I have decided to **handle duplicate records**. The idea I had, and implemented, was for each node to **store a list of records** with the same value, and to only delete the node when list of records is empty. This also made other methods more complicated.
 
 
 ### Timsort
@@ -106,10 +129,15 @@ When searching for natural runs, timsort only searches for **strictly decereasin
 
 #### Time complexities
 
-Best case: O(n)
-Average case: O(n*log(n))
-Worst case: O(n*log(n))
+Best case: `O(n)`
+Average case: `O(n*log(n))`
+Worst case: `O(n*log(n))`
 
 #### Overall difficulty level: **Extremely Difficult (to the point where I questioned the meaning of life)**
 
 Many online implementations of timsort did not include the true key elements of timsort in it. Most of the components mentioned above are not implemented in most of the codes online. Also, information on all of these is either hard to find or hard to understand. I even resorted to reading the source code of Python’s timsort written in C language and its documentations. This took me 1 whole week to implement. (QAQ)
+
+
+## Custom Sort
+
+> To be added
