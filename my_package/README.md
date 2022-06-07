@@ -25,20 +25,20 @@
 - Data Structures
     - AVL Tree ([AVLTree.py](AVLTree.py))
 
-## Detailed Descriptions
+# Detailed Descriptions
 
 > A record of all my findings, struggles, and hardwork ｡゜(｀Д´)゜｡
 
 
 ### How Records are Stored
 
-Records in my project are stored as [dictionaries in a list](/main.py#L48).  
+Records in my project are stored as [dictionaries in a list](/main.py#L48).
 Each record stores the package name, customer name, number of pax, and package cost per pax.
 Each value could be retrieved with their respective keys.
 
 
 
-### AVL Tree
+## AVL Tree
 
 ![A tree?](/assets/tree.gif)
 
@@ -92,7 +92,7 @@ To make things more complicated, I have decided to **handle duplicate records**.
 
 
 
-### Timsort
+## Timsort
 
 Timsort is an extremely fast stable hybrid sorting algorithm that is optimised for efficiently sorting real world data. Timsort is a sort that builds around the idea that data in real world have natural occurring sorted sequences (called “runs”).
 
