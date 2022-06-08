@@ -14,7 +14,7 @@ NOTE:
 """
 from my_package.misc import greater_than, less_than
 from my_package.timsort import timsort as my_timsort
-from my_package.test_gallop import timsort as test_tim
+from my_package.test_gallop import with_galloping as test_tim
 from timeit import default_timer as timer
 import random
 
@@ -174,9 +174,14 @@ def test(func, original_array, reverse=False):
     sorted_array = sorted(array, key=lambda x:x["key"], reverse=reverse)
     params = ["key"]
     if reverse: params.append(reverse)
-    start = timer()
-    func(array, *params)
-    end = timer()
+    try:
+        start = timer()
+        func(array, *params)
+        end = timer()
+    except IndexError as e:
+        with open("error.log", mode="a") as f:
+            f.write(f"{original_array}\n")
+        raise IndexError(e)
     is_sorted = array == sorted_array
     print(f"({'XO'[is_sorted]}) {func.__name__:<15} {end-start}")
     if not is_sorted:
@@ -185,7 +190,7 @@ def test(func, original_array, reverse=False):
 
 
 # Test codes
-# n = 200  # Length of array
+# n = 300  # Length of array
 # rate_of_unsortedness = 1000  # The larger the value, the more sorted partially_sorted is
 # range_of_numbers = 100
 # # Produce arrays for testing

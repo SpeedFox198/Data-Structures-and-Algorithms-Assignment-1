@@ -41,7 +41,7 @@ from .misc import greater_than, less_than
 MIN_GALLOP = 7  # Minimum wins to gallop
 
 
-def timsort(array:list, key:str, reverse:bool=False) -> None:
+def with_galloping(array:list, key:str, reverse:bool=False) -> None:
     """ Sorts an array using timsort sort algorithm """
 
     n = len(array)  # Length of array
@@ -461,7 +461,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             a_count = i - found_index
 
             # Merge elements till found index
-            while i > found_index:
+            while i >= found_index:
                 array[k] = array[i]
                 i -= 1
                 k -= 1
@@ -488,7 +488,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             b_count = j - found_index
 
             # Merge elements till found index
-            while j > found_index:
+            while j >= found_index:
                 array[k] = temp[j]
                 j -= 1
                 k -= 1
