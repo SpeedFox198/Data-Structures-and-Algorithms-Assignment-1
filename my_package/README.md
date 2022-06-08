@@ -173,6 +173,11 @@ Then, if the new value should be inserted to the left, I'll perform insertion of
 There's also a case where the update of the value did not mess up the sequence of the array at all (new value is still larger than left and smaller than right). In that case we will just skip the operation.
 
 
+### Time complexities
+
+Best case: `O(1)`
+Worst case: `O(n)`
+
 ### Footnote
 
 After writing this algorithm, I decided to search online
