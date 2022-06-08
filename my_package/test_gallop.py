@@ -321,7 +321,65 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 if a_count >= min_gallop:
                     break
 
+            k += 1  # k index increment
+
+        # Artificially increased values so that it can be decreased
+        min_gallop += 1
+        a_count += 1
+        b_count += 1
+        k += 1  # Increase k as break statement skipped increment
+
+        # Gallop will continue till a_count or b_count is bellow min_gallop
+        while a_count >= min_gallop or b_count >= min_gallop:
+            min_gallop -= min_gallop > 1  # Make it easier to enter galloping mode
+
+            # Find B[j] in A
+            found_index = gallop_right(temp, key, array[j][key], i, n1-i)
+
+            # Get a_count
+            a_count = found_index - i
+
+            # Merge elements till found index
+            while i <= found_index:
+                array[k] = temp[i]
+                i += 1
+                k += 1
+
+            # If k pointer has reached j pointer (runs has been merged)
+            if k == j:
+                merging = False
+                break
+
+            # Insert target into correct index
+            array[k] = array[j]
+            j += 1
             k += 1
+
+            # Find A[i] in B
+            found_index = gallop_left(array, temp[i][key], j, s2+n2-j)
+
+            # Get b_count
+            b_count = found_index - j
+
+            # Merge elements till found index
+            while j <= found_index:
+                array[k] = array[j]
+                j += 1
+                k += 1
+
+            # Insert target into correct index
+            array[k] = temp[i]
+            i += 1
+            k += 1
+
+            # If all elements in A has been merged:
+            if i == n1:
+                merging = False
+                break
+        
+        min_gallop += 1  # Penalise it for leaving galloping mode
+    
+    return min_gallop
 
 
 def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int, reverse:bool=False) -> int:
@@ -366,35 +424,30 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
 
                     return min_gallop  # Return new value of min_gallop
 
+                a_count += 1  # Increase counter since A won
+                b_count = 0   # Set B counter to back to 0
+
+                # Break if won enough for galloping
+                if a_count >= min_gallop:
+                    break
+
             # Else B[j] >= A[i] (B won)
             else:
                 array[k] = temp[j]
                 j -= 1
 
-            k -= 1
+                # End merging if i goes our of range
+                if j < 0:
+                    return min_gallop  # Return new value of min_gallop
 
+                b_count += 1  # Increase counter since B won
+                a_count = 0   # Set A counter to back to 0
 
+                # Break if won enough for galloping
+                if b_count >= min_gallop:
+                    break
 
-    # Merge (copy) till either pointer i or j goes out of range
-    while i >= s1 and j >= 0:
-
-        # Else A[i] > B[j]
-        if greater_than(array[i][key], temp[j][key], reverse=reverse):
-            array[k] = array[i]
-            i -= 1
-
-        # Else B[j] >= A[i]
-        else:
-            array[k] = temp[j]
-            j -= 1
-
-        k -= 1
-
-    # Copy temp content into array if any
-    while j >= 0:
-        array[k] = temp[j]
-        j -= 1
-        k -= 1
+            k -= 1  # k index decrement
 
 
 def gallop_left(run:list, key:str, target, index:int, max_offset:int, reverse:bool=False) -> int:
