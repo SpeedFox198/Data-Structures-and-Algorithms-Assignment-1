@@ -47,6 +47,8 @@ def timsort(array:list, key:str, reverse:bool=False) -> None:
     n = len(array)  # Length of array
     remaining = n  # Length of array left that needs merging
 
+    min_gallop = MIN_GALLOP  # Minimum wins for galloping
+
     min_run = compute_minrun(n)  # Minimum length of a run
 
     # Stacks for storing runs and powers found
@@ -84,9 +86,9 @@ def timsort(array:list, key:str, reverse:bool=False) -> None:
                 powers.pop()  # Remove old power from stack
                 prev_prev_low, prev_prev_count = runs[-2]
                 if prev_prev_count <= prev_count:
-                    merge_lo(array, key, prev_prev_low, prev_prev_count, prev_low, prev_count, reverse=reverse)
+                    min_gallop = merge_lo(array, key, prev_prev_low, prev_prev_count, prev_low, prev_count, min_gallop, reverse=reverse)
                 else:
-                    merge_hi(array, key, prev_prev_low, prev_prev_count, prev_low, prev_count, reverse=reverse)
+                    min_gallop = merge_hi(array, key, prev_prev_low, prev_prev_count, prev_low, prev_count, min_gallop, reverse=reverse)
 
                 runs.pop()  # Remove old prev run from stack
                 runs[-1][1] += prev_count  # Set new low and count of current run
@@ -105,9 +107,9 @@ def timsort(array:list, key:str, reverse:bool=False) -> None:
     for i in range(len(runs)-2, -1, -1):
         prev_low, prev_count = runs[i]
         if prev_count <= curr_count:
-            merge_lo(array, key, prev_low, prev_count, curr_low, curr_count, reverse=reverse)
+            min_gallop = merge_lo(array, key, prev_low, prev_count, curr_low, curr_count, min_gallop, reverse=reverse)
         else:
-            merge_hi(array, key, prev_low, prev_count, curr_low, curr_count, reverse=reverse)
+            min_gallop = merge_hi(array, key, prev_low, prev_count, curr_low, curr_count, min_gallop, reverse=reverse)
 
         # Calculate new low and count
         curr_low = prev_low
@@ -353,7 +355,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 return min_gallop  # Return new value of min_gallop
 
             # Find A[i] in B
-            found_index = gallop_left(array, temp[i][key], j, s2+n2-j, reverse=reverse)
+            found_index = gallop_left(array, key, temp[i][key], j, s2+n2-j, reverse=reverse)
 
             # Get b_count
             b_count = found_index - j
@@ -453,7 +455,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             min_gallop -= min_gallop > 1  # Make it easier to enter galloping mode
 
             # Find B[j] in A
-            found_index = gallop_right(array, key, temp[j], i, i-s1, reverse=reverse)
+            found_index = gallop_right(array, key, temp[j][key], i, i-s1, reverse=reverse)
 
             # Get a_count
             a_count = i - found_index

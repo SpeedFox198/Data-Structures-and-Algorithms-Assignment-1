@@ -12,8 +12,9 @@ NOTE:
 - Previous testing had yielded much greater differences in speed when the functions weren't used
 - However the usage of the functions are necessary as we need to compare both strings and numbers
 """
-from misc import greater_than, less_than
-from timsort import timsort as my_timsort
+from my_package.misc import greater_than, less_than
+from my_package.timsort import timsort as my_timsort
+from my_package.test_gallop import timsort as test_tim
 from timeit import default_timer as timer
 import random
 
@@ -179,12 +180,12 @@ def test(func, original_array, reverse=False):
     is_sorted = array == sorted_array
     print(f"({'XO'[is_sorted]}) {sort_func.__name__:<15} {end-start}")
     if not is_sorted:
-        with open("error.txt", mode="a") as f:
+        with open("error.log", mode="a") as f:
             f.write(f"{original_array}\n")
 
 
 # Test codes
-n = 100000  # Length of array
+n = 2000  # Length of array
 rate_of_unsortedness = 1000  # The larger the value, the more sorted partially_sorted is
 range_of_numbers = 100
 # Produce arrays for testing
@@ -193,12 +194,12 @@ completely_random = [{"key":random.randint(0, range_of_numbers)} for _ in range(
 
 # Test on completely random arrays
 print("Completely Random:")
-for sort_func in (mergeSort, theirTimSort, my_timsort):
+for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
     test(sort_func, completely_random)
 
 # Test on partially sorted arrays
 print("Partially Sorted:")
-for sort_func in (mergeSort, theirTimSort, my_timsort):
+for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
     test(sort_func, partially_sorted)
 
 
