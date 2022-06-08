@@ -138,9 +138,9 @@ When merging, only **adjacent runs** are merged for stability.
 
 ### Time complexities
 
-Best case: `O(n)`
-Average case: `O(n*log(n))`
-Worst case: `O(n*log(n))`
+- Best case: `O(n)`
+- Average case: `O(n*log(n))`
+- Worst case: `O(n*log(n))`
 
 ### Overall difficulty level: **Extremely Difficult (to the point where I questioned the meaning of life)**
 
@@ -175,8 +175,8 @@ There's also a case where the update of the value did not mess up the sequence o
 
 ### Time complexities
 
-Best case: `O(1)`
-Worst case: `O(n)`
+- Best case: `O(1)`
+- Worst case: `O(n)`
 
 ### Footnote
 
