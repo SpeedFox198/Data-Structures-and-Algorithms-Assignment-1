@@ -178,36 +178,39 @@ def test(func, original_array, reverse=False):
     func(array, *params)
     end = timer()
     is_sorted = array == sorted_array
-    print(f"({'XO'[is_sorted]}) {sort_func.__name__:<15} {end-start}")
+    print(f"({'XO'[is_sorted]}) {func.__name__:<15} {end-start}")
     if not is_sorted:
         with open("error.log", mode="a") as f:
             f.write(f"{original_array}\n")
 
 
 # Test codes
-n = 2000  # Length of array
-rate_of_unsortedness = 1000  # The larger the value, the more sorted partially_sorted is
-range_of_numbers = 100
-# Produce arrays for testing
-partially_sorted = [{"key":(1,2)[not random.randint(0, rate_of_unsortedness)]*i} for i in range(n)]
-completely_random = [{"key":random.randint(0, range_of_numbers)} for _ in range(n)]
+# n = 200  # Length of array
+# rate_of_unsortedness = 1000  # The larger the value, the more sorted partially_sorted is
+# range_of_numbers = 100
+# # Produce arrays for testing
+# partially_sorted = [{"key":(1,2)[not random.randint(0, rate_of_unsortedness)]*i} for i in range(n)]
+# completely_random = [{"key":random.randint(0, range_of_numbers)} for _ in range(n)]
 
-# Test on completely random arrays
-print("Completely Random:")
-for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
-    test(sort_func, completely_random)
+# # Test on completely random arrays
+# print("Completely Random:")
+# for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
+#     test(sort_func, completely_random)
 
-# Test on partially sorted arrays
-print("Partially Sorted:")
-for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
-    test(sort_func, partially_sorted)
+# # Test on partially sorted arrays
+# print("Partially Sorted:")
+# for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
+#     test(sort_func, partially_sorted)
 
 
-# Test on reverse functionality
-print("\nReverse sort:\n")
+# # Test on reverse functionality
+# print("\nReverse sort:\n")
 
-print("Completely Random:")
-test(my_timsort, completely_random, True)
+# print("Completely Random:")
+# test(my_timsort, completely_random, True)
 
-print("Partially Sorted:")
-test(my_timsort, partially_sorted, True)
+# print("Partially Sorted:")
+# test(my_timsort, partially_sorted, True)
+
+from error import error_array
+test(test_tim, error_array)

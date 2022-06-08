@@ -335,7 +335,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             a_count = found_index - i
 
             # Merge elements till found index
-            while i <= found_index:
+            while i < found_index:
                 array[k] = temp[i]
                 i += 1
                 k += 1
@@ -361,7 +361,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             b_count = found_index - j
 
             # Merge elements till found index
-            while j <= found_index:
+            while j < found_index:
                 array[k] = array[j]
                 j += 1
                 k += 1
@@ -461,7 +461,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             a_count = i - found_index
 
             # Merge elements till found index
-            while i >= found_index:
+            while i > found_index:
                 array[k] = array[i]
                 i -= 1
                 k -= 1
@@ -488,7 +488,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             b_count = j - found_index
 
             # Merge elements till found index
-            while j >= found_index:
+            while j > found_index:
                 array[k] = temp[j]
                 j -= 1
                 k -= 1
@@ -586,8 +586,8 @@ def gallop_right(run:list, key:str, target, index:int, max_offset:int, reverse:b
             offset = max_offset
 
         # Change offset values to low and high indexes for binary search
+        prev_offset += index
         offset += index
-        max_offset += index
 
     # Binary search for position
     while prev_offset < offset:
