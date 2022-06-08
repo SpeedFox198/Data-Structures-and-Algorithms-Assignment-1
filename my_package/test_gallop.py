@@ -288,7 +288,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 # End merging if j goes out of range
                 if j >= s2 + n2:
                     # Copy temp content into array if any
-                    copy_runs(array, temp, k+1, i, n1)
+                    copy_A(array, temp, k+1, i, n1)
                     return min_gallop  # Return new value of min_gallop
 
                 b_count += 1  # Increase counter since B won
@@ -349,7 +349,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
 
             if j == s2 + n2:
                 # Copy temp content into array if any
-                copy_runs(array, temp, k, i, n1)
+                copy_A(array, temp, k, i, n1)
                 return min_gallop  # Return new value of min_gallop
 
             # Find A[i] in B
@@ -364,15 +364,19 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 j += 1
                 k += 1
 
+            # If all elements in B has been merged
+            if j == s2 + n2:
+                # Copy temp content into array if any
+                copy_A(array, temp, k, i, n1)
+                return min_gallop  # Return new value of min_gallop
+
             # Insert target into correct index
             array[k] = temp[i]
             i += 1
             k += 1
 
-            # If all elements in B has been merged
-            if j == s2 + n2:
-                # Copy temp content into array if any
-                copy_runs(array, temp, k, i, n1)
+            # If all elements in A has been merged
+            if i == n1:
                 return min_gallop  # Return new value of min_gallop
 
         min_gallop += 1  # Penalise it for leaving galloping mode
@@ -409,14 +413,8 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
 
                 # End merging if i goes out of range
                 if i < s1:
-                    k -= 1
-
                     # Copy temp content into array if any
-                    while j >= 0:
-                        array[k] = temp[j]
-                        j -= 1
-                        k -= 1
-
+                    copy_B(array, temp, k-1, j)
                     return min_gallop  # Return new value of min_gallop
 
                 a_count += 1  # Increase counter since A won
@@ -466,10 +464,49 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 i -= 1
                 k -= 1
 
+            # If all elements in A has been merged
+            if i == s1-1:
+                # Copy temp content into array if any
+                copy_B(array, temp, k-1, j)
+                return min_gallop  # Return new value of min_gallop
+
             # Insert target into correct index
             array[k] = temp[j]
             j -= 1
             k -= 1
+
+            # If all elements in B has been merged
+            if j == -1:
+                return min_gallop  # Return new value of min_gallop
+
+            # Find A[i] in B
+            found_index = gallop_left(temp, key, array[i][key], j, j, reverse=reverse)
+
+            # Get b_count
+            b_count = j - found_index
+
+            # Merge elements till found index
+            while j >= found_index:
+                array[k] = temp[j]
+                j -= 1
+                k -= 1
+
+            # If all elements of B has been merged
+            if j == -1:
+                return min_gallop  # Return new value of min_gallop
+
+            # Insert target into correct index
+            array[k] = array[i]
+            i -= 1
+            k -= 1
+
+            # If all elements of A has been merged:
+            if i == s1-1:
+                # Copy temp content into array if any
+                copy_B(array, temp, k-1, j)
+                return min_gallop  # Return new value of min_gallop
+
+        min_gallop += 1  # Penalise it for leaving galloping mode
 
 
 def gallop_left(run:list, key:str, target, index:int, max_offset:int, reverse:bool=False) -> int:
@@ -562,9 +599,17 @@ def gallop_right(run:list, key:str, target, index:int, max_offset:int, reverse:b
     return offset
 
 
-def copy_runs(array:list, temp:list, k:int, i:int, n:int, step:int=1) -> None:
-    """ Copy content from temp array into original array """
+def copy_A(array:list, temp:list, k:int, i:int, n:int) -> None:
+    """ Copy content from A into original array """
     while i < n:
         array[k] = temp[i]
-        i += step
-        k += step
+        i += 1
+        k += 1
+
+
+def copy_B(array:list, temp:list, k:int, j:int) -> None:
+    """ Copy content from B into original array """
+    while j >= 0:
+        array[k] = temp[j]
+        j -= 1
+        k -= 1
