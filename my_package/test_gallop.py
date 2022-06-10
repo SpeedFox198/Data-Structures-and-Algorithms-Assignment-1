@@ -329,7 +329,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             min_gallop -= min_gallop > 1  # Make it easier to enter galloping mode
 
             # Find B[j] in A
-            found_index = gallop_right(temp, key, array[j][key], i, n1-i, reverse=reverse)
+            found_index = gallop_right(temp, key, array[j][key], i, n1-i-1, reverse=reverse)
 
             # Get a_count
             a_count = found_index - i
@@ -355,7 +355,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 return min_gallop  # Return new value of min_gallop
 
             # Find A[i] in B
-            found_index = gallop_left(array, key, temp[i][key], j, s2+n2-j, reverse=reverse)
+            found_index = gallop_left(array, key, temp[i][key], j, s2+n2-j-1, reverse=reverse)
 
             # Get b_count
             b_count = found_index - j
@@ -482,7 +482,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 return min_gallop  # Return new value of min_gallop
 
             # Find A[i] in B
-            found_index = gallop_left(temp, key, array[i][key], j, j, reverse=reverse)
+            found_index = gallop_left(temp, key, array[i][key], j, j-1, reverse=reverse)
 
             # Get b_count
             b_count = j - found_index

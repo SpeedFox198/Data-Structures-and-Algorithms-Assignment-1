@@ -187,6 +187,7 @@ def test(func, original_array, reverse=False):
     if not is_sorted:
         with open("error.log", mode="a") as f:
             f.write(f"{original_array}\n")
+    return array
 
 
 # Test codes
@@ -218,4 +219,4 @@ def test(func, original_array, reverse=False):
 # test(my_timsort, partially_sorted, True)
 
 from error import error_array
-test(test_tim, error_array)
+x = test(test_tim, error_array)
