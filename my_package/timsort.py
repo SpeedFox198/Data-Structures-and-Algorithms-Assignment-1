@@ -42,7 +42,7 @@ MIN_GALLOP = 7  # Minimum wins to gallop
 
 
 def timsort(array:list, key:str, reverse:bool=False) -> None:
-    """ Sorts an array using timsort sort algorithm """
+    """ Sorts an array using timsort algorithm """
 
     n = len(array)  # Length of array
     remaining = n  # Length of array left that needs merging
