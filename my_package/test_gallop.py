@@ -57,6 +57,18 @@ def with_galloping(array:list, key:str, reverse:bool=False) -> None:
 
     low = 0  # Index of low limit of run
     while remaining:
+        # if len(runs) > 4 and runs[2][1] >= 37506 and runs[3][1] >= 5000:
+        #     print(runs)
+        #     out = []
+        #     i, j, x = 0, n-1, 19
+        #     while i < j:
+        #         x = count_run(array, key, i, j)[0]
+        #         if x >= 19:
+        #             out.append(f"[{i}, {x}]")
+        #             i += x
+        #         else: break
+        #     print(f"[{', '.join(out)}]")
+        #     input('\ncontinue?\n')
 
         # Get length of next run
         count, decreasing = count_run(array, key, low, low+remaining-1, reverse=reverse)

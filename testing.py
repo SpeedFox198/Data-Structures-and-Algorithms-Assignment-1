@@ -226,7 +226,7 @@ from error import error_array
 
 x = error_array
 y = sorted(x, key=lambda a:a["key"])
-z = test_tim(x, "key")
+test_tim(x, "key")
 # for i in range(len(x)):
 #     print(x[i], y[i])
-print(z)
+print(x==y)
