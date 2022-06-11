@@ -687,10 +687,10 @@ def gallop_B_right(run:list, key:str, target, index:int, max_offset:int, reverse
     # Binary search for position
     while prev_offset < offset:
         mid = (prev_offset + offset) >> 1
-        if less_than(run[mid][key], target, reverse=reverse):
-            prev_offset = mid + 1
-        else:
+        if less_than(target, run[mid][key], reverse=reverse):
             offset = mid
+        else:
+            prev_offset = mid + 1
 
     # Return index to insert element
     return offset
