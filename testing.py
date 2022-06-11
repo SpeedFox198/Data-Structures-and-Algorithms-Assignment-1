@@ -192,7 +192,7 @@ def test(func, original_array, reverse=False, output_error=True):
 
 
 # Test codes
-# n = 10000  # Length of array
+# n = 300000  # Length of array
 # rate_of_unsortedness = 1000  # The larger the value, the more sorted partially_sorted is
 # range_of_numbers = 100
 # # Produce arrays for testing
@@ -218,15 +218,19 @@ def test(func, original_array, reverse=False, output_error=True):
 
 # print("Completely Random:")
 # test(my_timsort, completely_random, True)
+# test(test_tim, completely_random, True)
 
 # print("Partially Sorted:")
 # test(my_timsort, partially_sorted, True)
+# test(test_tim, partially_sorted, True)
 
-from error import error_array
 
-x = error_array
-y = sorted(x, key=lambda a:a["key"])
-test_tim(x, "key")
-# for i in range(len(x)):
-#     print(x[i], y[i])
-print(x==y)
+# from error import error_array
+
+# x = error_array
+# y = sorted(x, key=lambda a:a["key"], reverse=True)
+# a=''
+# test_tim(x, "key", reverse=True)
+# print(x==y)
+# print([i["key"] for i in x])
+# print(y)
