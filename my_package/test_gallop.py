@@ -42,7 +42,7 @@ MIN_GALLOP = 7  # Minimum wins to gallop
 
 
 def with_galloping(array:list, key:str, reverse:bool=False) -> None:
-    """ Sorts an array using timsort sort algorithm """
+    """ Sorts an array using timsort algorithm """
 
     n = len(array)  # Length of array
     remaining = n  # Length of array left that needs merging
@@ -329,7 +329,10 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             min_gallop -= min_gallop > 1  # Make it easier to enter galloping mode
 
             # Find B[j] in A
-            found_index = gallop_right(temp, key, array[j][key], i, n1-i-1, reverse=reverse)
+            x = gallop_B_right(temp, key, array[j][key], i, n1-i, reverse=reverse)
+            found_index = gallop_right(temp, key, array[j][key], i, n1-i, reverse=reverse)
+            if x != found_index:
+                print("gallop_B_right:", x, "gallop_right:", found_index)
 
             # Get a_count
             a_count = found_index - i
@@ -355,7 +358,10 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 return min_gallop  # Return new value of min_gallop
 
             # Find A[i] in B
-            found_index = gallop_left(array, key, temp[i][key], j, s2+n2-j-1, reverse=reverse)
+            x = gallop_A_right(array, key, temp[i][key], j, s2+n2-j, reverse=reverse)
+            found_index = gallop_left(array, key, temp[i][key], j, s2+n2-j, reverse=reverse)
+            if x != found_index:
+                print("gallop_A_right:", x, "gallop_left:", found_index)
 
             # Get b_count
             b_count = found_index - j
@@ -455,7 +461,10 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             min_gallop -= min_gallop > 1  # Make it easier to enter galloping mode
 
             # Find B[j] in A
+            x = gallop_B_left(array, key, temp[j][key], i, i-s1, reverse=reverse)
             found_index = gallop_right(array, key, temp[j][key], i, i-s1, reverse=reverse)
+            if x != found_index:
+                print("gallop_B_left:", x, "gallop_right:", found_index)
 
             # Get a_count
             a_count = i - found_index
@@ -482,7 +491,10 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 return min_gallop  # Return new value of min_gallop
 
             # Find A[i] in B
-            found_index = gallop_left(temp, key, array[i][key], j, j-1, reverse=reverse)
+            x = gallop_A_left(temp, key, array[i][key], j, j, reverse=reverse)
+            found_index = gallop_left(temp, key, array[i][key], j, j, reverse=reverse)
+            if x != found_index:
+                print("gallop_A_left:", x, "gallop_left:", found_index)
 
             # Get b_count
             b_count = j - found_index
@@ -540,7 +552,7 @@ def gallop_left(run:list, key:str, target, index:int, max_offset:int, reverse:bo
             prev_offset = offset        # Set previous offset value
             offset = (offset << 1) + 1  # Increase offset
 
-        # Prevent offset from going past limit
+        # Prevent offset from going past limit  
         if offset > max_offset:
             offset = max_offset
 
@@ -612,6 +624,10 @@ def gallop_A_right(run:list, key:str, target, index:int, max_offset:int, reverse
     prev_offset = 0  # Value of previous offset (low boundary in binary search)
     offset = 1       # Value of current offset (high boundary in binary search)
 
+    # If target is less than or equals to first element of run
+    if not greater_than(target, run[index][key], reverse=reverse):
+        return index  # Return index to insert element
+
     # Gallop till run[index + prev_offset] < target <= run[index + offset]
     while offset < max_offset and less_than(run[index+offset][key], target, reverse=reverse):
         prev_offset = offset        # Set previous offset value
@@ -642,6 +658,10 @@ def gallop_A_left(run:list, key:str, target, index:int, max_offset:int, reverse:
     prev_offset = 0  # Value of previous offset (low boundary in binary search)
     offset = 1       # Value of current offset (high boundary in binary search)
 
+    # If target is greater than last element of run
+    if greater_than(target, run[index][key], reverse=reverse):
+        return index + 1  # Return index to insert element
+
     # Gallop till run[index - offset] < target <= run[index - prev_offset]
     while offset < max_offset and not less_than(run[index-offset][key], target, reverse=reverse):
         prev_offset = offset        # Set previous offset value
@@ -670,6 +690,10 @@ def gallop_B_right(run:list, key:str, target, index:int, max_offset:int, reverse
     """ Gallop right and find position to insert element of run B inside run A """
     prev_offset = 0  # Value of previous offset (low boundary in binary search)
     offset = 1       # Value of current offset (high boundary in binary search)
+
+    # If target is less than first element of run
+    if less_than(target, run[index][key], reverse=reverse):
+        return index
 
     # Gallop till run[index + prev_offset] <= target < run[index + offset]
     while offset < max_offset and not less_than(target, run[index+offset][key], reverse=reverse):
@@ -700,6 +724,10 @@ def gallop_B_left(run:list, key:str, target, index:int, max_offset:int, reverse:
     """ Gallop left and find position to insert element of run B inside run A """
     prev_offset = 0  # Value of previous offset (low boundary in binary search)
     offset = 1       # Value of current offset (high boundary in binary search)
+
+    # If target is greater than or eauals to last element of run
+    if not less_than(target, run[index][key], reverse=reverse):
+        return index + 1  # Return index to insert element
 
     # Gallop till run[index - offest] <= target < run[index - prev_offset]
     while offset < max_offset and less_than(target, run[index-offset][key], reverse=reverse):
