@@ -38,9 +38,6 @@ Here, some beautiful looking text:
 from .misc import greater_than, less_than
 
 
-MIN_GALLOP = 7  # Minimum wins to gallop
-
-
 def timsort(array:list, key:str, reverse:bool=False) -> None:
     """ Sorts an array using timsort algorithm """
 
@@ -239,7 +236,7 @@ def count_run(array:list, key:str, low:int, high:int, reverse:bool=False) -> tup
         for i in range(low+1, high+1):
 
             # Break if is decreasing
-            if less_than(array[i][key], array[i-1][key]):
+            if less_than(array[i][key], array[i-1][key], reverse=reverse):
                 break
             else:
                 count += 1
@@ -328,89 +325,3 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, reverse:bool=F
         array[k] = temp[j]
         j -= 1
         k -= 1
-
-
-def gallop_left(run:list, target, index:int, max_offset:int) -> int:
-    """ Gallop and find position to insert element of left array inside right array """
-    prev_offset = 0  # Value of previous offset (low boundary in binary search)
-    offset = 1       # Value of current offset (high boundary in binary search)
-
-    # Gallop to the right
-    if run[index] < target:
-
-        # Gallop till run[index + prev_offset] < target <= run[index + offset]
-        while offset < max_offset and run[index+offset] < target:
-            prev_offset = offset        # Set previous offset value
-            offset = (offset << 1) + 1  # Increase offset
-
-        # Prevent offset from going past limit
-        if offset > max_offset:
-            offset = max_offset
-
-        # Change offset values to low and high indexes for binary search
-        prev_offset += index
-        offset += index
-
-    # Gallop to the left
-    else:
-        while offset < max_offset and run[index-offset] >= target:
-            prev_offset = offset        # Set previous offset value
-            offset = (offset << 1) + 1  # Increase offset
-
-        # Prevent offset from going past limit
-        if offset > max_offset:
-            offset = max_offset
-
-        # Change offset values to low and high indexes for binary search
-        prev_offset, offset = index - offset, index - prev_offset
-
-    while prev_offset < offset:
-        mid = (prev_offset + offset) >> 1
-        if run[mid] < target:
-            prev_offset = mid + 1
-        else:
-            offset = mid
-
-    return offset
-
-
-def gallop_right(run:list, target, index:int, max_offset:int) -> int:
-    """ Gallop and find position to insert element of right array inside left array """
-    prev_offset = 0
-    offset = 1
-
-    # Gallop to the left
-    if target < run[index]:
-        while offset < max_offset and target < run[index-offset]:
-            prev_offset = offset        # Set previous offset value
-            offset = (offset << 1) + 1  # Increase offset
-
-        # Prevent offset from going past limit
-        if offset > max_offset:
-            offset = max_offset
-
-        # Change offset values to low and high indexes for binary search
-        prev_offset, offset = index - offset, index - prev_offset
-
-    # Gallop to the right
-    else:
-        while offset < max_offset and target >= run[index+offset]:
-            prev_offset = offset        # Set previous offset value
-            offset = (offset << 1) + 1  # Increase offset
-
-        # Prevent offset from going past limit
-        if offset > max_offset:
-            offset = max_offset
-
-        # Change offset values to low and high indexes for binary search
-        offset += index
-        max_offset += index
-
-    while prev_offset < offset:
-        mid = (prev_offset + offset) >> 1
-        if target < run[mid]:
-            offset = mid
-        else:
-            prev_offset = mid + 1
-
-    return offset
