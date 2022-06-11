@@ -329,10 +329,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             min_gallop -= min_gallop > 1  # Make it easier to enter galloping mode
 
             # Find B[j] in A
-            x = gallop_B_right(temp, key, array[j][key], i, n1-i, reverse=reverse)
-            found_index = gallop_right(temp, key, array[j][key], i, n1-i, reverse=reverse)
-            if x != found_index:
-                print("gallop_B_right:", x, "gallop_right:", found_index)
+            found_index = gallop_B_right(temp, key, array[j][key], i, n1-i, reverse=reverse)
 
             # Get a_count
             a_count = found_index - i
@@ -358,10 +355,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 return min_gallop  # Return new value of min_gallop
 
             # Find A[i] in B
-            x = gallop_A_right(array, key, temp[i][key], j, s2+n2-j, reverse=reverse)
-            found_index = gallop_left(array, key, temp[i][key], j, s2+n2-j, reverse=reverse)
-            if x != found_index:
-                print("gallop_A_right:", x, "gallop_left:", found_index)
+            found_index = gallop_A_right(array, key, temp[i][key], j, s2+n2-j, reverse=reverse)
 
             # Get b_count
             b_count = found_index - j
@@ -461,10 +455,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             min_gallop -= min_gallop > 1  # Make it easier to enter galloping mode
 
             # Find B[j] in A
-            x = gallop_B_left(array, key, temp[j][key], i, i-s1, reverse=reverse)
-            found_index = gallop_right(array, key, temp[j][key], i, i-s1, reverse=reverse)
-            if x != found_index:
-                print("gallop_B_left:", x, "gallop_right:", found_index)
+            found_index = gallop_B_left(array, key, temp[j][key], i, i-s1, reverse=reverse)
 
             # Get a_count
             a_count = i - found_index
@@ -491,10 +482,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
                 return min_gallop  # Return new value of min_gallop
 
             # Find A[i] in B
-            x = gallop_A_left(temp, key, array[i][key], j, j, reverse=reverse)
-            found_index = gallop_left(temp, key, array[i][key], j, j, reverse=reverse)
-            if x != found_index:
-                print("gallop_A_left:", x, "gallop_left:", found_index)
+            found_index = gallop_A_left(temp, key, array[i][key], j, j, reverse=reverse)
 
             # Get b_count
             b_count = j - found_index

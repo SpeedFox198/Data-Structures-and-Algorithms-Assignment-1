@@ -169,7 +169,7 @@ def mergeSort(arr, key):
             k += 1
 
 
-def test(func, original_array, reverse=False):
+def test(func, original_array, reverse=False, output_error=True):
     array = original_array.copy()
     sorted_array = sorted(array, key=lambda x:x["key"], reverse=reverse)
     params = ["key"]
@@ -179,24 +179,28 @@ def test(func, original_array, reverse=False):
         func(array, *params)
         end = timer()
     except IndexError as e:
-        with open("error.log", mode="a") as f:
-            f.write(f"{original_array}\n")
+        if output_error:
+            with open("error.log", mode="a") as f:
+                f.write(f"{original_array}\n")
         raise IndexError(e)
     is_sorted = array == sorted_array
     print(f"({'XO'[is_sorted]}) {func.__name__:<15} {end-start}")
-    if not is_sorted:
+    if not is_sorted and output_error:
         with open("error.log", mode="a") as f:
             f.write(f"{original_array}\n")
     return array
 
 
 # Test codes
-n = 3000  # Length of array
+n = 10000  # Length of array
 rate_of_unsortedness = 1000  # The larger the value, the more sorted partially_sorted is
 range_of_numbers = 100
 # Produce arrays for testing
 partially_sorted = [{"key":(1,2)[not random.randint(0, rate_of_unsortedness)]*i} for i in range(n)]
 completely_random = [{"key":random.randint(0, range_of_numbers)} for _ in range(n)]
+
+# Print Length of array
+print("Sorting array of length", n)
 
 # Test on completely random arrays
 print("Completely Random:")
@@ -209,39 +213,11 @@ for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
     test(sort_func, partially_sorted)
 
 
-# # Test on reverse functionality
-# print("\nReverse sort:\n")
+# Test on reverse functionality
+print("\nReverse sort:\n")
 
-# print("Completely Random:")
-# test(my_timsort, completely_random, True)
+print("Completely Random:")
+test(my_timsort, completely_random, True)
 
-# print("Partially Sorted:")
-# test(my_timsort, partially_sorted, True)
-
-# from error import error_array
-# # x = test(test_tim, error_array)
-# import my_package.test_gallop as tg
-
-# A = [(i,) for i in range(5, 10)]
-# n1 = len(A)
-# B = [(i,) for i in range(30, 55, 2)]
-# n2 = len(B)
-
-# print(A)
-# print(B)
-
-# i = 0
-# j = 0
-
-# target = A[i][0]
-# x = tg.gallop_A_right(run=B, key=0, target=target, index=j, max_offset=n2-1)
-# print("Offset:", x-j)
-
-# target = B[j][0]
-# print(target)
-# x = tg.gallop_B_right(run=A, key=0, target=target, index=i, max_offset=n1-1)
-# print("Offset:", x-i)
-
-# target = 60  # When greater than 54 should yield 13
-# x = tg.gallop_A_right(run=B, key=0, target=target, index=0, max_offset=n2)
-# print(x)
+print("Partially Sorted:")
+test(my_timsort, partially_sorted, True)
