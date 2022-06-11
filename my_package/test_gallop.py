@@ -241,7 +241,7 @@ def count_run(array:list, key:str, low:int, high:int, reverse:bool=False) -> tup
         for i in range(low+1, high+1):
 
             # Break if is decreasing
-            if less_than(array[i][key], array[i-1][key]):
+            if less_than(array[i][key], array[i-1][key], reverse=reverse):
                 break
             else:
                 count += 1

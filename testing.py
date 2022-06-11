@@ -192,45 +192,34 @@ def test(func, original_array, reverse=False, output_error=True):
 
 
 # Test codes
-# n = 300000  # Length of array
-# rate_of_unsortedness = 1000  # The larger the value, the more sorted partially_sorted is
-# range_of_numbers = 100
-# # Produce arrays for testing
-# partially_sorted = [{"key":(1,2)[not random.randint(0, rate_of_unsortedness)]*i} for i in range(n)]
-# completely_random = [{"key":random.randint(0, range_of_numbers)} for _ in range(n)]
+n = 3000000  # Length of array
+rate_of_unsortedness = 1000  # The larger the value, the more sorted partially_sorted is
+range_of_numbers = 100
+# Produce arrays for testing
+partially_sorted = [{"key":(1,2)[not random.randint(0, rate_of_unsortedness)]*i} for i in range(n)]
+completely_random = [{"key":random.randint(0, range_of_numbers)} for _ in range(n)]
 
-# # Print Length of array
-# print("Sorting array of length", n)
+# Print Length of array
+print("Sorting array of length", n)
 
-# # Test on completely random arrays
-# print("Completely Random:")
-# for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
-#     test(sort_func, completely_random)
+# Test on completely random arrays
+print("Completely Random:")
+for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
+    test(sort_func, completely_random)
 
-# # Test on partially sorted arrays
-# print("Partially Sorted:")
-# for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
-#     test(sort_func, partially_sorted)
-
-
-# # Test on reverse functionality
-# print("\nReverse sort:\n")
-
-# print("Completely Random:")
-# test(my_timsort, completely_random, True)
-# test(test_tim, completely_random, True)
-
-# print("Partially Sorted:")
-# test(my_timsort, partially_sorted, True)
-# test(test_tim, partially_sorted, True)
+# Test on partially sorted arrays
+print("Partially Sorted:")
+for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
+    test(sort_func, partially_sorted)
 
 
-# from error import error_array
+# Test on reverse functionality
+print("\nReverse sort:\n")
 
-# x = error_array
-# y = sorted(x, key=lambda a:a["key"], reverse=True)
-# a=''
-# test_tim(x, "key", reverse=True)
-# print(x==y)
-# print([i["key"] for i in x])
-# print(y)
+print("Completely Random:")
+test(my_timsort, completely_random, True)
+test(test_tim, completely_random, True)
+
+print("Partially Sorted:")
+test(my_timsort, partially_sorted, True)
+test(test_tim, partially_sorted, True)
