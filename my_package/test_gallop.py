@@ -57,18 +57,6 @@ def with_galloping(array:list, key:str, reverse:bool=False) -> None:
 
     low = 0  # Index of low limit of run
     while remaining:
-        # if len(runs) > 4 and runs[2][1] >= 37506 and runs[3][1] >= 5000:
-        #     print(runs)
-        #     out = []
-        #     i, j, x = 0, n-1, 19
-        #     while i < j:
-        #         x = count_run(array, key, i, j)[0]
-        #         if x >= 19:
-        #             out.append(f"[{i}, {x}]")
-        #             i += x
-        #         else: break
-        #     print(f"[{', '.join(out)}]")
-        #     input('\ncontinue?\n')
 
         # Get length of next run
         count, decreasing = count_run(array, key, low, low+remaining-1, reverse=reverse)
@@ -126,15 +114,6 @@ def with_galloping(array:list, key:str, reverse:bool=False) -> None:
         # Calculate new low and count
         curr_low = prev_low
         curr_count += prev_count
-        # runs.pop()
-        # runs[i][1] = curr_count
-        # print(runs)
-        # i, j = 0, n-1
-        # while i < j:
-        #     x = count_run(array, key, i, j)[0]
-        #     print(f"run({x})[{array[i][key]}..{array[i+x-1][key]}]")
-        #     i += x
-        # input('\ncontinue?')
 
 
 def compute_minrun(n:int) -> int:
@@ -526,7 +505,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             # If all elements of A has been merged:
             if i == s1-1:
                 # Copy temp content into array if any
-                copy_B(array, temp, k-1, j)
+                copy_B(array, temp, k, j)
                 return min_gallop  # Return new value of min_gallop
 
         min_gallop += 1  # Penalise it for leaving galloping mode
