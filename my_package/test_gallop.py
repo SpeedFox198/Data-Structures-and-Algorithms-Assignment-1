@@ -114,6 +114,15 @@ def with_galloping(array:list, key:str, reverse:bool=False) -> None:
         # Calculate new low and count
         curr_low = prev_low
         curr_count += prev_count
+        # runs.pop()
+        # runs[i][1] = curr_count
+        # print(runs)
+        # i, j = 0, n-1
+        # while i < j:
+        #     x = count_run(array, key, i, j)[0]
+        #     print(f"run({x})[{array[i][key]}..{array[i+x-1][key]}]")
+        #     i += x
+        # input('\ncontinue?')
 
 
 def compute_minrun(n:int) -> int:
