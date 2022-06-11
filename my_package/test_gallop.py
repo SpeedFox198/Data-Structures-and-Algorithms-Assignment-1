@@ -696,6 +696,35 @@ def gallop_B_right(run:list, key:str, target, index:int, max_offset:int, reverse
     return offset
 
 
+def gallop_B_left(run:list, key:str, target, index:int, max_offset:int, reverse:bool=False) -> int:
+    """ Gallop left and find position to insert element of run B inside run A """
+    prev_offset = 0  # Value of previous offset (low boundary in binary search)
+    offset = 1       # Value of current offset (high boundary in binary search)
+
+    # Gallop till run[index - offest] <= target < run[index - prev_offset]
+    while offset < max_offset and less_than(target, run[index-offset][key], reverse=reverse):
+        prev_offset = offset        # Set previous offset value
+        offset = (offset << 1) + 1  # Increase offset
+
+    # Prevent offset from going past limit
+    if offset > max_offset:
+        offset = max_offset
+
+    # Change offset values to low and high indexes for binary search
+    prev_offset, offset = index - offset, index - prev_offset
+
+    # Binary search for position
+    while prev_offset < offset:
+        mid = (prev_offset + offset) >> 1
+        if less_than(target, run[mid][key], reverse=reverse):
+            offset = mid
+        else:
+            prev_offset = mid + 1
+
+    # Return index to insert element
+    return offset
+
+
 def copy_A(array:list, temp:list, k:int, i:int, n:int) -> None:
     """ Copy content from A into original array """
     while i < n:
