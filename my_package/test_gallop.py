@@ -534,6 +534,8 @@ def gallop_left(run:list, key:str, target, index:int, max_offset:int, reverse:bo
 
     # Gallop to the left
     else:
+
+        # Gallop till run[index - offset] < target <= run[index - prev_offset]
         while offset < max_offset and not less_than(run[index-offset][key], target, reverse=reverse):
             prev_offset = offset        # Set previous offset value
             offset = (offset << 1) + 1  # Increase offset
@@ -564,6 +566,8 @@ def gallop_right(run:list, key:str, target, index:int, max_offset:int, reverse:b
 
     # Gallop to the left
     if less_than(target, run[index][key], reverse=reverse):
+
+        # Gallop till run[index - offest] <= target < run[index - prev_offset]
         while offset < max_offset and less_than(target, run[index-offset][key], reverse=reverse):
             prev_offset = offset        # Set previous offset value
             offset = (offset << 1) + 1  # Increase offset
@@ -577,6 +581,8 @@ def gallop_right(run:list, key:str, target, index:int, max_offset:int, reverse:b
 
     # Gallop to the right
     else:
+
+        # Gallop till run[index + prev_offset] <= target < run[index + offset]
         while offset < max_offset and not less_than(target, run[index+offset][key], reverse=reverse):
             prev_offset = offset        # Set previous offset value
             offset = (offset << 1) + 1  # Increase offset
@@ -596,6 +602,95 @@ def gallop_right(run:list, key:str, target, index:int, max_offset:int, reverse:b
             offset = mid
         else:
             prev_offset = mid + 1
+
+    # Return index to insert element
+    return offset
+
+
+def gallop_A_right(run:list, key:str, target, index:int, max_offset:int, reverse:bool=False) -> int:
+    """ Gallop right and find position to insert element of run A inside run B """
+    prev_offset = 0  # Value of previous offset (low boundary in binary search)
+    offset = 1       # Value of current offset (high boundary in binary search)
+
+    # Gallop till run[index + prev_offset] < target <= run[index + offset]
+    while offset < max_offset and less_than(run[index+offset][key], target, reverse=reverse):
+        prev_offset = offset        # Set previous offset value
+        offset = (offset << 1) + 1  # Increase offset
+
+    # Prevent offset from going past limit
+    if offset > max_offset:
+        offset = max_offset
+
+    # Change offset values to low and high indexes for binary search
+    prev_offset += index
+    offset += index
+
+    # Binary search for position
+    while prev_offset < offset:
+        mid = (prev_offset + offset) >> 1
+        if less_than(run[mid][key], target, reverse=reverse):
+            prev_offset = mid + 1
+        else:
+            offset = mid
+
+    # Return index to insert element
+    return offset
+
+
+def gallop_A_left(run:list, key:str, target, index:int, max_offset:int, reverse:bool=False) -> int:
+    """ Gallop left and find position to insert element of run A inside run B """
+    prev_offset = 0  # Value of previous offset (low boundary in binary search)
+    offset = 1       # Value of current offset (high boundary in binary search)
+
+    # Gallop till run[index - offset] < target <= run[index - prev_offset]
+    while offset < max_offset and not less_than(run[index-offset][key], target, reverse=reverse):
+        prev_offset = offset        # Set previous offset value
+        offset = (offset << 1) + 1  # Increase offset
+
+    # Prevent offset from going past limit
+    if offset > max_offset:
+        offset = max_offset
+
+    # Change offset values to low and high indexes for binary search
+    prev_offset, offset = index - offset, index - prev_offset
+
+    # Binary search for position
+    while prev_offset < offset:
+        mid = (prev_offset + offset) >> 1
+        if less_than(run[mid][key], target, reverse=reverse):
+            prev_offset = mid + 1
+        else:
+            offset = mid
+
+    # Return index to insert element
+    return offset
+
+
+def gallop_B_right(run:list, key:str, target, index:int, max_offset:int, reverse:bool=False) -> int:
+    """ Gallop right and find position to insert element of run B inside run A """
+    prev_offset = 0  # Value of previous offset (low boundary in binary search)
+    offset = 1       # Value of current offset (high boundary in binary search)
+
+    # Gallop till run[index + prev_offset] <= target < run[index + offset]
+    while offset < max_offset and not less_than(target, run[index+offset][key], reverse=reverse):
+        prev_offset = offset        # Set previous offset value
+        offset = (offset << 1) + 1  # Increase offset
+
+    # Prevent offset from going past limit
+    if offset > max_offset:
+        offset = max_offset
+
+    # Change offset values to low and high indexes for binary search
+    prev_offset += index
+    offset += index
+
+    # Binary search for position
+    while prev_offset < offset:
+        mid = (prev_offset + offset) >> 1
+        if less_than(run[mid][key], target, reverse=reverse):
+            prev_offset = mid + 1
+        else:
+            offset = mid
 
     # Return index to insert element
     return offset

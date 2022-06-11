@@ -219,4 +219,23 @@ def test(func, original_array, reverse=False):
 # test(my_timsort, partially_sorted, True)
 
 from error import error_array
-x = test(test_tim, error_array)
+# x = test(test_tim, error_array)
+import my_package.test_gallop as tg
+
+class Null:
+    def __repr__(self):
+        return "-"
+
+A = [(i,) for i in range(5, 10)]
+n1 = len(A)
+B = [Null()]*n1 + [(i,) for i in range(30,55)]
+n2 = len(B)
+
+print(A)
+print(B)
+
+i = 0
+j = n1
+
+# x = tg.gallop_left(run=B, key=0, target=5, index=6, max_offset=n2-1)
+
