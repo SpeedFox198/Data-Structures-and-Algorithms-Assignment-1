@@ -469,7 +469,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             # If all elements in A has been merged
             if i == s1-1:
                 # Copy temp content into array if any
-                copy_B(array, temp, k-1, j)
+                copy_B(array, temp, k, j)
                 return min_gallop  # Return new value of min_gallop
 
             # Insert target into correct index
