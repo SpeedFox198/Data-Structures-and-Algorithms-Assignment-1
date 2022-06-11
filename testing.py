@@ -192,7 +192,7 @@ def test(func, original_array, reverse=False, output_error=True):
 
 
 # Test codes
-n = 3000000  # Length of array
+n = 100000  # Length of array
 rate_of_unsortedness = 1000  # The larger the value, the more sorted partially_sorted is
 range_of_numbers = 100
 # Produce arrays for testing
