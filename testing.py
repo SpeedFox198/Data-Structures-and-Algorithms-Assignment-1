@@ -14,7 +14,6 @@ NOTE:
 """
 from my_package.misc import greater_than, less_than
 from my_package.timsort import timsort as my_timsort
-from my_package.test_merge_at import timsort as test_tim
 from timeit import default_timer as timer
 import random
 
@@ -204,12 +203,12 @@ print("Sorting array of length", n)
 
 # Test on completely random arrays
 print("Completely Random:")
-for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
+for sort_func in (mergeSort, theirTimSort, my_timsort):
     test(sort_func, completely_random)
 
 # Test on partially sorted arrays
 print("Partially Sorted:")
-for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
+for sort_func in (mergeSort, theirTimSort, my_timsort):
     test(sort_func, partially_sorted)
 
 
