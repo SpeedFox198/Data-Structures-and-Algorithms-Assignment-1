@@ -204,12 +204,12 @@ print("Sorting array of length", n)
 
 # Test on completely random arrays
 print("Completely Random:")
-for sort_func in (mergeSort, theirTimSort, my_timsort):
+for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
     test(sort_func, completely_random)
 
 # Test on partially sorted arrays
 print("Partially Sorted:")
-for sort_func in (mergeSort, theirTimSort, my_timsort):
+for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
     test(sort_func, partially_sorted)
 
 

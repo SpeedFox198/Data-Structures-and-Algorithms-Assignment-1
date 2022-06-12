@@ -261,10 +261,26 @@ def reverse_run(array:list, low:int, high:int) -> None:
 def merge_at(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int, reverse:bool=False) -> int:
     """ Merges two runs A and B at index s1 and s2 with length n1 and n2 """
 
-    # Find where does B[0] start in A (elements in A before that are already in place)
-    k = gallop_B_right(array, key, array[s2][key], s1, s1+n1, reverse=reverse)
-    s1 = k
-    n1 -= k - s1
+    # Find where B[0] start in A (elements in A before that are already in place)
+    found_index = gallop_B_right(array, key, array[s2][key], s1, n1, reverse=reverse)
+    n1 -= found_index - s1
+    s1 = found_index
+
+    # If all elements in A are before B
+    if n1 == 0:
+        return min_gallop
+
+    # Find where A[-1] end in B (elements in B after that are already in place)
+    found_index = gallop_A_left(array, key, array[s2-1][key], s2+n2-1, n2, reverse=reverse)
+    n2 = found_index - s2
+
+    if n2 <= 0:
+        print("bruh")
+
+    if n1 <= n2:
+        return merge_lo(array, key, s1, n1, s2, n2, min_gallop, reverse=reverse)
+    else:
+        return merge_hi(array, key, s1, n1, s2, n2, min_gallop, reverse=reverse)
 
 
 def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int, reverse:bool=False) -> int:
