@@ -342,7 +342,6 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
 
             # Get a_count
             a_count = found_index - i
-            print(found_index, i, a_count)
 
             # Merge elements till found index
             while i < found_index:
