@@ -14,7 +14,6 @@ NOTE:
 """
 from my_package.misc import greater_than, less_than
 from my_package.timsort import timsort as my_timsort
-from my_package.test_gallop import with_galloping as test_tim
 from timeit import default_timer as timer
 import random
 
@@ -204,12 +203,12 @@ print("Sorting array of length", n)
 
 # Test on completely random arrays
 print("Completely Random:")
-for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
+for sort_func in (mergeSort, theirTimSort, my_timsort):
     test(sort_func, completely_random)
 
 # Test on partially sorted arrays
 print("Partially Sorted:")
-for sort_func in (mergeSort, theirTimSort, my_timsort, test_tim):
+for sort_func in (mergeSort, theirTimSort, my_timsort):
     test(sort_func, partially_sorted)
 
 
@@ -218,8 +217,6 @@ print("\nReverse sort:\n")
 
 print("Completely Random:")
 test(my_timsort, completely_random, True)
-test(test_tim, completely_random, True)
 
 print("Partially Sorted:")
 test(my_timsort, partially_sorted, True)
-test(test_tim, partially_sorted, True)
