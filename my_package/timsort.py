@@ -259,7 +259,7 @@ def reverse_run(array:list, low:int, high:int) -> None:
 
 
 def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int, reverse:bool=False) -> int:
-    """ Merges two runs at index s1 and s2 with length n1 and n2 where n1 < n2 """
+    """ Merges two runs A and B at index s1 and s2 with length n1 and n2 where n1 < n2 """
 
     a_count = 0  # Number of times A won in a row
     b_count = 0  # Number of times B won in a row
@@ -385,7 +385,7 @@ def merge_lo(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
 
 
 def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int, reverse:bool=False) -> int:
-    """ Merges two runs at index s1 and s2 with length n1 and n2 where n1 > n2 """
+    """ Merges two runs A and B at index s1 and s2 with length n1 and n2 where n1 > n2 """
 
     a_count = 0  # Number of times A won in a row
     b_count = 0  # Number of times B won in a row
