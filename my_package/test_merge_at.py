@@ -467,7 +467,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             found_index = gallop_B_left(array, key, temp[j][key], i, i-s1, reverse=reverse)
 
             # Get a_count
-            a_count = i - found_index
+            a_count = i - found_index + 1
 
             # Merge elements till found index
             while i >= found_index:
@@ -494,7 +494,7 @@ def merge_hi(array:list, key:str, s1:int, n1:int, s2:int, n2:int, min_gallop:int
             found_index = gallop_A_left(temp, key, array[i][key], j, j, reverse=reverse)
 
             # Get b_count
-            b_count = j - found_index
+            b_count = j - found_index + 1
 
             # Merge elements till found index
             while j >= found_index:
