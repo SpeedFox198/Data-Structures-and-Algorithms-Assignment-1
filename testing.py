@@ -7,7 +7,6 @@ Here we push timsort to the limits and test it
 After testing, my implementation of timsort was the clear winner :)
 
 NOTE:
-- Relative imports will need to be edited to prevent import errors
 - The usage of greater_than and less_than has caused a huge function overhead
 - Previous testing had yielded much greater differences in speed when the functions weren't used
 - However the usage of the functions are necessary as we need to compare both strings and numbers
