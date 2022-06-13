@@ -124,7 +124,7 @@ def compute_minrun(n:int) -> int:
     """ Computes and return the minimum length of a run from 16 - 32 """
 
     # As python implemetation of insertion sort is not fast enough
-    # A minrun of value 32 is chosen instead of the original 64    
+    # minrun is from range 16 to 32 instead of range 32 to 64
 
     r = 0  # Becomes 1 if any 1 bits are shifted off
 
