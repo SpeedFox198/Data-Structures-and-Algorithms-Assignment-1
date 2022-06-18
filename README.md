@@ -77,7 +77,6 @@ Student may add any other algorithms/features that are not covered in this modul
 Timsort was a hell to learn due to me attempting to understand how every part of it worked
 (it was especially hard for me to understand how did `powerloop` using `powersort` worked)
 (it also took a long time for me to implement galloping functionality).
-I might implement it if I have time later (and also if I am still willing to do it).
 Also, I wish I could've implemented/learn even more cool algorithms like Boyer–Moore algorithm, Aho-Corasick algorithm, Introsort.
 
 ### Final words
